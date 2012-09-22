@@ -58,7 +58,7 @@ coffee_notes.Router = Backbone.Router.extend({
         var self = this;
 		
         var coffee = self.coffeeList.get(id);
-        self.changePage(new coffee_notes.StuffView({model:coffee}));
+        self.changePage(new coffee_notes.views.coffeeView({model:coffee}));
     },
 	
     editCoffee:function (id) {
@@ -66,7 +66,7 @@ coffee_notes.Router = Backbone.Router.extend({
         var self = this;
 		
         var coffee = self.coffeeList.get(id);
-        self.changePage(new coffee_notes.coffeeEditView({model:coffee}));
+        self.changePage(new coffee_notes.views.coffeeEditView({model:coffee}));
     },
 
     before:function (callback) {
@@ -130,7 +130,7 @@ $(document).ready(function() {
 		persistence.store.memory.config(persistence);
 	}
 	
-	persistence.reset();
+	//persistence.reset();
 	//the persistence.define function lets you define a schema for your table
 	//it returns a constructor functions that allows you to access, insert, update and delete
 	//record in this table	
