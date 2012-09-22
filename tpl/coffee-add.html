@@ -6,22 +6,85 @@
         </div><!---header-->          
           <div data-role="content">
               <form id="addform">
-                  <!-- BASIC INFO -->
-                  <div data-role="collapsible" data-collapsed="false" data-content-theme="d" data-mini="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                      <h3>Tell us about the coffee</h3>
-                      <div data-role="fieldcontain" class="ui-hide-label">
-                          <label for="add_name">Name:</label>
-                          <input type="text" name="name" id="add_name" placeholder="Name"/>
-                      </div>
-                      <div data-role="fieldcontain" class="ui-hide-label">
-                          <label for="add_description">Tasting Notes:</label>
-                          <textarea cols="40" rows="8" name="description" id="add_description" placeholder="Description"></textarea>
-                      </div>
-                </div>
-
+                 
+              		<!-- BASIC INFO -->
+                    <div data-role="collapsible" data-collapsed="false" data-content-theme="d" data-mini="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Tell us about the coffee</h3>
+                          <div data-role="fieldcontain" class="ui-hide-label">
+                              <label for="add_name">Name:</label>
+                              <input type="text" name="name" id="add_name" placeholder="Name"/>
+                          </div>
+                          <div data-role="fieldcontain" class="ui-hide-label">
+                              <label for="add_description">Tasting Notes:</label>
+                              <textarea cols="40" rows="8" name="description" id="add_description" placeholder="Description"></textarea>
+                          </div>
+                           <div data-role="fieldcontain">
+                              <select name="preparation" id="add_preparation"  data-theme="b">
+                                  <option  data-placeholder="true">How was the coffee prepared?</option>
+                                  <option value="Drip">Drip</option>
+                                  <option value="French Press">French Press</option>
+                                  <option value="Cold Brewed">Cold Brewed</option>
+                                  <option value="Espresso Machine">Espresso Machine</option>
+                              </select>
+                          </div>
+                         <div data-role="fieldcontain">
+                              <select name="rating" id="add_rating"  data-theme="b">
+                                  <option  data-placeholder="true">Choose a rating:</option>
+                                  <option value="1">1 Star</option>
+                                  <option value="2">2 Stars</option>
+                                  <option value="3">3 Stars</option>
+                                  <option value="4">4 Stars</option>
+                              </select>
+                          </div>
+                    </div>
+                    
+               		<!-- ROASTER INFO -->                   
+                    <div data-role="collapsible" id="add_roaster_info" data-mini="true"  data-content-theme="d"  data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Roaster Info</h3>
+                          <div data-role="fieldcontain" class="ui-hide-label">
+                              <label for="add_roaster">Roaster:</label>
+                              <input type="text" name="roaster" id="add_roaster" placeholder="Roaster" />
+                          </div>
+                          <div data-role="fieldcontain"  class="ui-hide-label">
+                              <label for="add_roast_date">Date:</label>
+                              <input type="date" name="roast_date" id="add_roast_date" value="" placeholder="Month/Day/Year"/>
+                          </div>
+                    </div>
+                    
+                	<!-- PROVENANCE INFO -->                   
+                   <div data-role="collapsible"  data-collapsed="true"  id="add_provenance_info" data-mini="true"  data-content-theme="d"  data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Tell us about the Beans</h3>
+                          <div data-role="fieldcontain">
+                              <select name="bean_composition" id="add_provenance" class="provenance" data-theme="b">
+                                  <option  data-placeholder="true">What type of beans is your coffee composed of?</option>                              
+                                  <option value="Blended">Blended</option>
+                                  <option value="Single Origin">Single Origin</option>
+                              </select>
+                          </div>
+                          <div class="specify_origin" style="display:none">
+                              <div data-role="fieldcontain"  class="ui-hide-label">
+                                  <label for="add_country">Country:</label>
+                              <input type="text" name="country" id="add_country" value=""  placeholder="Country"  />
+                              </div>
+                              <div data-role="fieldcontain" class="ui-hide-label">
+                                  <label for="add_region">Region:</label>
+                                  <input type="text" name="region" id="add_region" value=""  placeholder="Region"  />
+                              </div>
+                              <div data-role="fieldcontain" class="ui-hide-label">
+                                  <label for="add_farm">Farm:</label>
+                                  <input type="text" name="farm" id="add_farm" value=""  placeholder="Farm"  />
+                              </div>
+                              <div data-role="fieldcontain" class="ui-hide-label">
+                                  <label for="add_variety">Variety/Cultivar:</label>
+                                  <input type="text" name="variety" id="add_variety" value=""  placeholder="Variety/Cultivar"  />
+                              </div>
+                          </div>
+                              <div data-role="fieldcontain"  class="ui-hide-label">
+                                  <label for="add_process">Process:</label>
+                                  <input type="text" name="process" id="add_process" value=""  placeholder="Process"  />
+                              </div>
+                    </div>
+              </form> 
                   
-                  
-               </form>
-
 
           </div><!-- /content -->

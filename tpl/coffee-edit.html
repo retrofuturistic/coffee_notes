@@ -1,12 +1,11 @@
 
         <div data-role="header" data-theme="b" data-position="fixed">
-             <h1>Stuff Details</h1>
+             <h1>Coffee Details</h1>
               <a href="#browse" data-transition="slide" class="ui-btn-left" >Coffees</a>
               <a href="#coffee/<%= id %>" data-transition="slide" class="commit ui-btn-right" >Done</a>
         </div><!---header-->          
           <div data-role="content">
-              <form id="addform">
-              
+              <form id="editform">
               		<!-- BASIC INFO -->
                     <div data-role="collapsible" data-collapsed="false" data-content-theme="d" data-mini="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
                         <h3>Tell us about the coffee</h3>
@@ -16,9 +15,73 @@
                           </div>
                           <div data-role="fieldcontain" class="ui-hide-label">
                               <label for="add_description">Tasting Notes:</label>
-                              <textarea cols="40" rows="8" name="description" id="add_description" placeholder="Description"><%= description%></textarea>
+                              <textarea cols="40" rows="8" name="add_description" id="add_description" placeholder="Description"><%= description%></textarea>
                           </div>
-                   </div>
+                           <div data-role="fieldcontain">
+                              <select name="select_preparation" id="add_preparation"  data-theme="b">
+                                  <option  data-placeholder="true">How was the coffee prepared?</option>
+                                  <option  <%= preparation == 'Drip'? 'selected':'' %>>Drip</option>
+                                  <option <%= preparation == 'French Press'? 'selected':'' %> >French Press</option>
+                                  <option <%= preparation == 'Cold Brewed'? 'selected':'' %> >Cold Brewed</option>
+                                  <option <%= preparation == 'Espresso Machine'? 'selected':'' %>>Espresso Machine</option>
+                              </select>
+                          </div>
+                         <div data-role="fieldcontain">
+                              <select name="add_rating" id="add_rating"  data-theme="b">
+                                  <option  data-placeholder="true">Choose a rating:</option>
+                                  <option <%= rating == '1'? 'selected':'' %>>1 Star</option>
+                                  <option <%= rating == '2'? 'selected':'' %>>2 Stars</option>
+                                  <option <%= rating == '3'? 'selected':'' %>>3 Stars</option>
+                                  <option <%= rating == '4'? 'selected':'' %>>4 Stars</option>
+                              </select>
+                          </div>
+                    </div>
+                    
+               		<!-- ROASTER INFO -->                   
+                    <div data-role="collapsible" id="add_roaster_info" data-mini="true"  data-content-theme="d"  data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Roaster Info</h3>
+                          <div data-role="fieldcontain" class="ui-hide-label">
+                              <label for="add_roaster">Roaster:</label>
+                              <input type="text" name="name" id="add_roaster" placeholder="Roaster" value="<%= roaster %>"/>
+                          </div>
+                          <div data-role="fieldcontain"  class="ui-hide-label">
+                              <label for="add_roast_date">Date:</label>
+                              <input type="date" name="date" id="add_roast_date" value="<%= roast_date %>" placeholder="Month/Day/Year"/>
+                          </div>
+                    </div>
+                    
+                	<!-- PROVENANCE INFO -->                   
+                   <div data-role="collapsible"  data-collapsed="true"  id="add_provenance_info" data-mini="true"  data-content-theme="d"  data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Tell us about the Beans</h3>
+                          <div data-role="fieldcontain">
+                              <select name="add_provenance" id="add_provenance" class="provenance" data-theme="b">
+                                  <option <%= bean_composition == 'Blended'? 'selected':'' %>>Blended</option>
+                                  <option<%= bean_composition == 'Single Origin'? 'selected':'' %>>Single Origin</option>
+                              </select>
+                          </div>
+                          <div class="specify_origin" style="display:none">
+                              <div data-role="fieldcontain"  class="ui-hide-label">
+                                  <label for="add_country">Country:</label>
+                              <input type="text" name="name" id="add_country" value="<%= country %>"  placeholder="Country"  />
+                              </div>
+                              <div data-role="fieldcontain" class="ui-hide-label">
+                                  <label for="add_region">Region:</label>
+                                  <input type="text" name="name" id="add_region" value="<%= region %>"  placeholder="Region"  />
+                              </div>
+                              <div data-role="fieldcontain" class="ui-hide-label">
+                                  <label for="add_farm">Farm:</label>
+                                  <input type="text" name="name" id="add_farm" value="<%= farm %>"  placeholder="Farm"  />
+                              </div>
+                              <div data-role="fieldcontain" class="ui-hide-label">
+                                  <label for="add_variety">Variety/Cultivar:</label>
+                                  <input type="text" name="name" id="add_variety" value="<%= variety %>"  placeholder="Variety/Cultivar"  />
+                              </div>
+                          </div>
+                              <div data-role="fieldcontain"  class="ui-hide-label">
+                                  <label for="add_process">Process:</label>
+                                  <input type="text" name="name" id="add_process" value="<%= process %>"  placeholder="Process"  />
+                              </div>
+                    </div>
               </form> 
 
           </div><!-- /content -->

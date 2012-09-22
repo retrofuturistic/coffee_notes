@@ -6,7 +6,31 @@
         
         <div data-role="content">
         	<div class="coffeeDetails">
-                <p class="descDetails"><b>Description:</b><%= description %></p>
+                <p><b>Description:</b><%= description %></p>
+    
+                <p><b>Preparation:</b> <%= preparation %></p>
+    
+                <p><b>Rating:</b> <%=rating %> stars</p>
+    
+                <p><b>Roaster:</b> <%=roaster %></span></p>
+    
+                <p><b>Roast Date:</b> <%=roast_date %></p>
+    
+                <p><b>Bean Composition:</b>  <%=bean_composition %></p>
+    
+                <div id="origin_details">
+                    <p class="countryDetails"><b>Country:</b> <%= country %></p>
+        
+                    <p class="regDetails"><b>Region:</b> <%= region %></p>
+        
+                    <p class="farmDetails"><b>Farm:</b> <%= farm %></p>
+        
+                    <p class="varDetails"><b>Variety:</b> <%= variety %></p>
+                </div>
+    
+                <p class="proDetails"><b>Process:</b> <%= process %></p>
+			</div>
+
 			</div>
         </div>
         <div data-role="footer" data-theme="b" data-position="fixed" data-fullscreen="true">		
