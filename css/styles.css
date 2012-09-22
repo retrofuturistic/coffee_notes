@@ -20,6 +20,14 @@ input.ui-input-text, textarea.ui-input-text
 	font-size:12px;
 }
 
+
+#coffeeList li
+{
+	background-image: url("images/coffeecup.png");
+	background-position: 10px 20px;
+	background-repeat: no-repeat;
+	padding-left: 40px;
+}
 /*temporary hack for collapsible sets until 1.2.0 comes out*/
 
 .ui-collapsible.ui-collapsible-collapsed .ui-collapsible-heading .ui-icon-plus,
