@@ -1,8 +1,8 @@
 
         <div data-role="header" data-theme="b" data-position="fixed">
              <h1>Coffee Details</h1>
-              <a href="#browse" data-transition="slide" class="ui-btn-left" >Coffees</a>
-              <a href="#coffee/<%= id %>" data-transition="slide" class="commit ui-btn-right" >Done</a>
+              <a href="#browse" data-transition="slide" class="ui-btn-left" data-direction="reverse">Coffees</a>
+              <a href="#coffee/<%= id %>" data-transition="slide" class="commit ui-btn-right" data-direction="reverse">Done</a>
         </div><!---header-->          
           <div data-role="content">
               <form id="editform">
@@ -54,7 +54,7 @@
                    <div data-role="collapsible"  data-collapsed="true"  id="add_provenance_info" data-mini="true"  data-content-theme="d"  data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
                         <h3>Tell us about the Beans</h3>
                           <div data-role="fieldcontain">
-                              <select name="add_provenance" id="add_provenance" class="provenance" data-theme="b">
+                              <select name="edit_provenance" id="provenance" class="provenance" data-theme="b">
                                   <option <%= bean_composition == 'Blended'? 'selected':'' %>>Blended</option>
                                   <option<%= bean_composition == 'Single Origin'? 'selected':'' %>>Single Origin</option>
                               </select>

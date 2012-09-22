@@ -1,8 +1,8 @@
 
         <div data-role="header" data-theme="b" data-position="fixed">
              <h1>Coffee Details</h1>
-              <a href="#browse" data-transition="slide" class="ui-btn-left" >Coffees</a>
-              <a href="#" data-transition="slide" class="ui-btn-right save">Done</a>
+              <a href="#browse" data-transition="slide" class="ui-btn-left" data-direction="reverse">Coffees</a>
+              <a href="#browse" data-transition="slide" class="ui-btn-right save" data-direction="reverse">Done</a>
         </div><!---header-->          
           <div data-role="content">
               <form id="addform">
@@ -55,7 +55,7 @@
                    <div data-role="collapsible"  data-collapsed="true"  id="add_provenance_info" data-mini="true"  data-content-theme="d"  data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
                         <h3>Tell us about the Beans</h3>
                           <div data-role="fieldcontain">
-                              <select name="bean_composition" id="add_provenance" class="provenance" data-theme="b">
+                              <select name="bean_composition" id="provenance" class="provenance" data-theme="b">
                                   <option  data-placeholder="true">What type of beans is your coffee composed of?</option>                              
                                   <option value="Blended">Blended</option>
                                   <option value="Single Origin">Single Origin</option>

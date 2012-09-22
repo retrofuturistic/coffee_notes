@@ -25,6 +25,7 @@ coffee_notes.views.coffeeAddView = Backbone.View.extend({
     },  
 	
     events: {
+    	"change #provenance" 	: "change_provenance",
         "change"        : "change",
         "click .save"   : "save",
     },
@@ -38,6 +39,25 @@ coffee_notes.views.coffeeAddView = Backbone.View.extend({
         var change = {};
         change[target.name] = target.value;
         this.model.set(change);
+    },
+
+    change_provenance: function (event) {
+        // Remove any existing alert message
+       	console.log("provenance change event");
+
+		//let's grab the add_provenance value and specify_origin selector
+		var provenanceVal = $('#provenance').val();
+		var originInfo = $('.specify_origin');
+		
+		//by default, we hide it	
+		originInfo.hide();
+		
+		//however if the provenance_val is single origin, 
+		//show the country, region, farm and variety info
+		if (provenanceVal == "Single Origin") {
+			originInfo.show();
+		}
+		
     },
 	
     save: function () {
@@ -147,6 +167,7 @@ coffee_notes.views.coffeeEditView = Backbone.View.extend({
     },
 
     events: {
+    	"change #provenance" 	: "change_provenance",
         "change"        : "change",
         "click .commit"   : "commit"
     },
@@ -160,6 +181,25 @@ coffee_notes.views.coffeeEditView = Backbone.View.extend({
         var change = {};
         change[target.name] = target.value;
         this.model.set(change);
+    },
+	
+    change_provenance: function (event) {
+        // Remove any existing alert message
+       	console.log("provenance change event");
+
+		//let's grab the add_provenance value and specify_origin selector
+		var provenanceVal = $('#provenance').val();
+		var originInfo = $('.specify_origin');
+		
+		//by default, we hide it	
+		originInfo.hide();
+		
+		//however if the provenance_val is single origin, 
+		//show the country, region, farm and variety info
+		if (provenanceVal == "Single Origin") {
+			originInfo.show();
+		}
+		
     },
 	
     commit: function () {
