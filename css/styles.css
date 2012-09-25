@@ -26,7 +26,12 @@ input.ui-input-text, textarea.ui-input-text
 	background-image: url("images/coffeecup.png");
 	background-position: 10px 20px;
 	background-repeat: no-repeat;
-	padding-left: 40px;
+}
+
+#coffeeList .ui-btn-inner
+{
+	padding-left: 50px;
+
 }
 /*temporary hack for collapsible sets until 1.2.0 comes out*/
 
