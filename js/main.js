@@ -32,7 +32,9 @@ coffee_notes.Router = Backbone.Router.extend({
     },
 
     initialize:function () {
-        this.firstPage = true;
+       var self = this;
+       self.firstPage = true;		
+		
     },
 
     list:function () {
@@ -71,6 +73,7 @@ coffee_notes.Router = Backbone.Router.extend({
 
     before:function (callback) {
         console.log("getting the stuff list");
+        var self = this;
         
         if (!this.coffeeList) {
             console.log("making a new stuff list");
@@ -79,7 +82,14 @@ coffee_notes.Router = Backbone.Router.extend({
         
         //getting the data so its up to date!
         this.coffeeList.fetch({success:function () {
-            callback();
+			var numLen = self.coffeeList.models.length;
+		   if(self.coffeeList.models.length == 0)
+		   {
+			   //db is empty, we need to populate for debugging purposes
+				var dao = new coffee_notes.DAO(coffee_notes.db);
+				dao.populate(function() {});
+		   }
+           callback();
             }});
                                           
     },
@@ -153,6 +163,7 @@ $(document).ready(function() {
 															process: "TEXT"
 										});
 
+	//this sync with the database the schema we just defined			
 	persistence.schemaSync();		
    	console.log('database sync');
 
@@ -164,17 +175,8 @@ $(document).ready(function() {
 	//Setting this to the coffee_notes.db so we can access it later	
 	coffee_notes.db = coffeenotes;
 	
-	
-	//this sync with the database the schema we just defined			
-	//persistence.schemaSync();		
-   	//console.log('database sync');
-   		
 	//we use the template loader to load our template and
-	//set a callback that starts our backbone router and history
-
-	/*var dao = new coffee_notes.DAO(coffee_notes.db);
-	dao.populate(function(){});*/
-	
+	//set a callback that starts our backbone router and history	
 	coffee_notes.templateLoader.load(['coffee-list', 'coffee-details', 'coffee-list-item', 'coffee-add', 'coffee-edit'], function () {
     	                        self.app = new coffee_notes.Router();
         	                    Backbone.history.start();

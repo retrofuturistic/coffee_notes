@@ -80,6 +80,7 @@ _.extend(coffee_notes.DAO.prototype, {
 	},
     //  Populate table with sample data for testing/debugging purposes only
     populate:function (callback) {
+
 		var cNotes = new this.db({
 							name: "Hair Bender",
 							description: "Coffees from every major producing region provide the individual components of this complex sweet and savory blend which yields flavors of milk chocolate, caramel, jasmine, meyer lemon, apricot and pineapple.",
