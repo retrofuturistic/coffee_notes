@@ -40,7 +40,7 @@ coffee_notes.Router = Backbone.Router.extend({
         var self = this;
         this.before(function () {
            console.log("made it through the before callback");
-           self.changePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
+           self.slidePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
         });
     },
     
@@ -49,7 +49,7 @@ coffee_notes.Router = Backbone.Router.extend({
         var self = this;
         var coffee = new coffee_notes.models.coffee();
                                         
-        self.changePage(new coffee_notes.views.coffeeAddView({model:coffee}));
+        self.slidePage(new coffee_notes.views.coffeeAddView({model:coffee}));
     
     },
 	
@@ -58,7 +58,7 @@ coffee_notes.Router = Backbone.Router.extend({
         var self = this;
 		
         var coffee = self.coffeeList.get(id);
-        self.changePage(new coffee_notes.views.coffeeView({model:coffee}));
+        self.slidePage(new coffee_notes.views.coffeeView({model:coffee}));
     },
 	
     editCoffee:function (id) {
@@ -66,7 +66,7 @@ coffee_notes.Router = Backbone.Router.extend({
         var self = this;
 		
         var coffee = self.coffeeList.get(id);
-        self.changePage(new coffee_notes.views.coffeeEditView({model:coffee}));
+        self.slidePage(new coffee_notes.views.coffeeEditView({model:coffee}));
     },
 
     before:function (callback) {
@@ -83,7 +83,7 @@ coffee_notes.Router = Backbone.Router.extend({
             }});
                                           
     },
-    changePage:function (page) {
+    slidePage:function (page) {
     	//In the jqm-config.js, we took over the routing and transitions of pages from jquery mobile
     	//using backbone instead. so this function plays the role of changing pages.
     	//the page passed has your basic html but does not have the data-role and data-theme attributes
@@ -108,8 +108,15 @@ coffee_notes.Router = Backbone.Router.extend({
             this.firstPage = false;
         }
         
-        //now we are ready to change the page
-        $.mobile.changePage($(page.el), {changeHash:false, transition: transition});
+        if(window.location.hash == '#browse')
+        {
+ 	        //now we are ready to change the page
+	        $.mobile.changePage($(page.el), {changeHash:false, transition: transition, reverse:true});
+       	} else {
+        
+	        //now we are ready to change the page
+	        $.mobile.changePage($(page.el), {changeHash:false, transition: transition});
+        }
     }
 
 });
@@ -131,12 +138,9 @@ $(document).ready(function() {
 	}
 	
 	//persistence.reset();
-	//the persistence.define function lets you define a schema for your table
-	//it returns a constructor functions that allows you to access, insert, update and delete
-	//record in this table	
 	var coffeenotes = persistence.define('coffeenote', {
-															name: "TEXT",
-															description: "TEXT",
+														name: "TEXT",
+														description: "TEXT",
 															preparation: "TEXT",
 															rating: "TEXT",
 															roaster: "TEXT",
@@ -148,20 +152,36 @@ $(document).ready(function() {
 															variety: "TEXT",
 															process: "TEXT"
 										});
-		
+
+	persistence.schemaSync();		
+   	console.log('database sync');
+
+	//persistence.reset();
+	//the persistence.define function lets you define a schema for your table
+	//it returns a constructor functions that allows you to access, insert, update and delete
+	//record in this table	
+
 	//Setting this to the coffee_notes.db so we can access it later	
 	coffee_notes.db = coffeenotes;
 	
-	//this sync with the database the schema we just defined			
-	persistence.schemaSync();		
-   	console.log('database sync');
 	
+	//this sync with the database the schema we just defined			
+	//persistence.schemaSync();		
+   	//console.log('database sync');
+   		
 	//we use the template loader to load our template and
 	//set a callback that starts our backbone router and history
+
+	/*var dao = new coffee_notes.DAO(coffee_notes.db);
+	dao.populate(function(){});*/
+	
 	coffee_notes.templateLoader.load(['coffee-list', 'coffee-details', 'coffee-list-item', 'coffee-add', 'coffee-edit'], function () {
-                            self.app = new coffee_notes.Router();
-                            Backbone.history.start();
-                    });
+    	                        self.app = new coffee_notes.Router();
+        	                    Backbone.history.start();
+            	        });
+
+
+
 });   
 
 // ----------------------------------------------- Backbone.sync override ------------------------------------------ //
