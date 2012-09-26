@@ -1,10 +1,26 @@
 /* Desktop, fixed width CSS */
 
-.ui-page {
-    background: url("images/texturedbg.png");
-    background-repeat: repeat;
+.custom_listview_img {
+    margin:0px; 
+    padding:0px;
+    background-image:url('images/chemex.png');
+    background-repeat:no-repeat;
+    background-size:100%;
 }
 
+.ui-page {
+    //background: url("images/texturedbg.png");
+    //background-repeat: repeat;
+    background: url("images/chemex.png");
+    background-repeat:no-repeat;
+    background-size:100%;
+}
+
+.ui-bar-b {
+	text-shadow:none;
+	color:#323232;
+	border: 1px solid white;
+}
 .ui-select span .ui-btn-text
 {
 	font-size:12px;
@@ -20,19 +36,38 @@ input.ui-input-text, textarea.ui-input-text
 	font-size:12px;
 }
 
+/*.ui-listview {
+	height: 100%;
+}*/
+
+
+#coffeeList{
+	padding-top: 15px;
+}
+
 
 #coffeeList li
 {
 	background-image: url("images/coffeecup.png");
 	background-position: 10px 20px;
 	background-repeat: no-repeat;
-}
+	//background-color: rgba(156, 178, 186, 0.5);
+	background-color: rgba(70, 70, 70, 0.5);
+	border: 1px solid #B6C7CD);
+}	
 
-#coffeeList .ui-btn-inner
+#coffeeList .ui-btn-text
 {
 	padding-left: 50px;
-
+	width: 90%;
 }
+
+#coffeeList .ui-link-inherit
+{
+	color:black;
+	text-shadow:none;
+}
+
 /*temporary hack for collapsible sets until 1.2.0 comes out*/
 
 .ui-collapsible.ui-collapsible-collapsed .ui-collapsible-heading .ui-icon-plus,
@@ -49,10 +84,6 @@ input.ui-input-text, textarea.ui-input-text
 
 .ui-li.ui-field-contain  {
 	border-top-width: 0px;
-}
-
-.ui-listview {
-	padding-top: 10px;
 }
 
 a.ui-link-inherit {
@@ -81,3 +112,13 @@ a.ui-link-inherit {
 	padding-left:15px;
 	padding-right:15px;
 }
+
+.coffeeDetails .ui-body-b
+{
+	background-image:none;
+	background-color: rgba(255,255,255,0.5);
+	font-weight:normal;
+	text-shadow:none;
+	color:#000;
+}
+

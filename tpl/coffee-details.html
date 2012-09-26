@@ -5,20 +5,35 @@
         </div><!---header-->
         
         <div data-role="content">
-        	<div class="coffeeDetails">
-                <p><b>Description:</b><%= description %></p>
+        	<div class="coffeeDetails">   
+                  <ul data-role="listview" data-inset="true">
+                	<li data-role="list-divider">Description</li>
+                    <li><%= description %></li>
+                </ul>
+ 
+               <ul data-role="listview" data-inset="true">
+                	<li data-role="list-divider">Preparation</li>
+                    <li><%= preparation %></li>
+                </ul>
     
-                <p><b>Preparation:</b> <%= preparation %></p>
+                <ul data-role="listview" data-inset="true">
+                	<li data-role="list-divider">Rating</li>
+                    <li><%=rating %> stars</li>
+                </ul>
+
+                 <ul data-role="listview" data-inset="true">
+                 	<li data-role="list-divider">Roaster Info</li>
+	                <li><b>Name:</b> <%=roaster %></li>
+    	            <li><b>Date:</b> <%=roast_date %></li>
+                </ul>
+
     
-                <p><b>Rating:</b> <%=rating %> stars</p>
-    
-                <p><b>Roaster:</b> <%=roaster %></span></p>
-    
-                <p><b>Roast Date:</b> <%=roast_date %></p>
-    
-                <p><b>Bean Composition:</b>  <%=bean_composition %></p>
-    
-                <div id="origin_details">
+                <ul data-role="listview" data-inset="true">
+                	<li data-role="list-divider">Bean Composition</li>
+                    <li><%=bean_composition %></li>
+                </ul>
+     
+                <div id="origin_details" style="display:none">
                     <p class="countryDetails"><b>Country:</b> <%= country %></p>
         
                     <p class="regDetails"><b>Region:</b> <%= region %></p>
@@ -28,7 +43,10 @@
                     <p class="varDetails"><b>Variety:</b> <%= variety %></p>
                 </div>
     
-                <p class="proDetails"><b>Process:</b> <%= process %></p>
+                <ul data-role="listview" data-inset="true">
+                	<li data-role="list-divider">Process</li>
+                    <li><%=process %></li>
+                </ul>
 			</div>
 
 			</div>
