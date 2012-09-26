@@ -108,8 +108,9 @@ coffee_notes.views.coffeeListItemView = Backbone.View.extend({
 		this.model.bind("destroy", this.close, this);
     },
 
-    render: function(eventName) {
-		$(this.el).html(this.template(this.model.toJSON()));
+    render: function(eventName) {		
+    	
+		$(this.el).html(this.template(this.model.toJSON()))		
 		return this;
     }
 
@@ -127,12 +128,21 @@ coffee_notes.views.coffeeView = Backbone.View.extend({
         console.log('render');
 		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
+				
     },
 
     events: {
-        "click .delete"   : "delete"
+         "click .delete"   : "delete"
     },
+	
+	afterRender: function()
+	{
+			var originInfo = $('#origin_details');
+			if (this.model.get("bean_composition") == "Single Origin") {
+				originInfo.show();
+			}
 
+	},
     delete: function () {
         var self = this;
         this.model.destroy({

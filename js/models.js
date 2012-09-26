@@ -3,7 +3,12 @@
 // and in turn the database's schema describes our attributes.														  //
 // ------------------------------------------------------------------------------------------------------------------ //
 coffee_notes.models.coffee = Backbone.Model.extend({
-    dao: coffee_notes.DAO
+    dao: coffee_notes.DAO,
+     
+     defaults: {
+    	name: ""
+  }
+        
 });
 
 coffee_notes.models.coffeeCollection = Backbone.Collection.extend({
