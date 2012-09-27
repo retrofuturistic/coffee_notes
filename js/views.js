@@ -4,6 +4,22 @@
 // There are also views to add a model as well as edit a model.                                                      //
 // ----------------------------------------------------------------------------------------------------------------- //
 
+Backbone.View.prototype.close = function () {
+    if (this.beforeClose) {
+        this.beforeClose();
+    }
+
+    this.remove();
+    this.unbind();
+    
+    console.log('View undelegateEvents');
+    this.undelegateEvents();
+};
+
+Backbone.View.prototype.pageInitHandler = function () {
+    console.log('View page init handled');
+};
+
 
 coffee_notes.views.coffeeAddView = Backbone.View.extend({
 	
@@ -142,6 +158,24 @@ coffee_notes.views.coffeeView = Backbone.View.extend({
 				originInfo.show();
 			}
 
+	},
+	pageInitHandler: function()
+	{
+		console.log("page init handler in Coffee Details View");
+		var provenance = $("#provenance");
+		
+		if(provenance)
+		{
+			var bean_composition = provenance.html();
+			var originInfo = $(".origin_details");
+			originInfo.hide();
+			if(bean_composition == "Single Origin") 
+			{
+				originInfo.show();
+			}
+			
+		}
+		
 	},
     delete: function () {
         var self = this;
