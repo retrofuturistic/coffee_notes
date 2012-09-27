@@ -33,16 +33,22 @@ coffee_notes.Router = Backbone.Router.extend({
 
     initialize:function () {
        var self = this;
-       self.firstPage = true;		
+       self.firstPage = true;
+	   self.getList(function(){});	
 		
     },
 
     list:function () {
         console.log("route: list ");
         var self = this;
-        this.before(function () {
+        this.getList(function () {
            console.log("made it through the before callback");
-           self.slidePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
+		   if(self.requestedID)
+		   {
+			   self.coffeeDetails(self.requestedID);
+		   } else {
+           	self.slidePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
+		   }
         });
     },
     
@@ -58,20 +64,35 @@ coffee_notes.Router = Backbone.Router.extend({
     coffeeDetails:function (id) {
         console.log('Router details');
         var self = this;
+		self.requestedID = null;
 		
+		if(!self.coffeeList) self.getList(function(){});	
         var coffee = self.coffeeList.get(id);
-        self.slidePage(new coffee_notes.views.coffeeView({model:coffee}));
+		if(!coffee)
+		{
+			self.requestedID = id;
+			self.list();
+		} else {
+		     self.slidePage(new coffee_notes.views.coffeeView({model:coffee}));
+		}
     },
 	
     editCoffee:function (id) {
         console.log('Router edit details');
         var self = this;
 		
+		if(!self.coffeeList)
+		{
+	   		self.getList(function(){});	
+		}
         var coffee = self.coffeeList.get(id);
-        self.slidePage(new coffee_notes.views.coffeeEditView({model:coffee}));
+		if(coffee)
+		{
+        	self.slidePage(new coffee_notes.views.coffeeEditView({model:coffee}));
+		}
     },
 
-    before:function (callback) {
+    getList:function (callback) {
         console.log("getting the stuff list");
         var self = this;
         
@@ -93,6 +114,24 @@ coffee_notes.Router = Backbone.Router.extend({
             }});
                                           
     },
+	pageInitHandler: function() {
+		console.log("page init handler");
+		var provenance = $("#provenance");
+		
+		if(provenance)
+		{
+			var bean_composition = provenance.html();
+			var originInfo = $(".origin_details");
+			originInfo.hide();
+			if(bean_composition == "Single Origin") 
+			{
+				originInfo.show();
+			}
+			
+		}
+		
+	},
+	
     slidePage:function (page) {
     	//In the jqm-config.js, we took over the routing and transitions of pages from jquery mobile
     	//using backbone instead. so this function plays the role of changing pages.
@@ -179,12 +218,28 @@ $(document).ready(function() {
 	//set a callback that starts our backbone router and history	
 	coffee_notes.templateLoader.load(['coffee-list', 'coffee-details', 'coffee-list-item', 'coffee-add', 'coffee-edit'], function () {
     	                        self.app = new coffee_notes.Router();
+								window.router = self.app;
         	                    Backbone.history.start();
             	        });
 
 
 
 });   
+
+function pageInitHandler()
+{
+	if(window.router)
+	{
+		console.log("we have a routing");
+		window.router.pageInitHandler();
+	}
+}
+
+$(document).bind("pageinit", function(event,data) {
+	console.log("page init called");	
+	pageInitHandler();			
+});
+
 
 // ----------------------------------------------- Backbone.sync override ------------------------------------------ //
 // we are overriding the Backbone.sync function to create, read, update and delete our data via our local db.        //
