@@ -30,17 +30,17 @@
     
                 <ul data-role="listview" data-inset="true">
                 	<li data-role="list-divider">Bean Composition</li>
-                    <li><%=bean_composition %></li>
+                    <li id="provenance"><%=bean_composition %></li>
                 </ul>
      
-                <div id="origin_details" style="display:none">
-                    <p class="countryDetails"><b>Country:</b> <%= country %></p>
-        
-                    <p class="regDetails"><b>Region:</b> <%= region %></p>
-        
-                    <p class="farmDetails"><b>Farm:</b> <%= farm %></p>
-        
-                    <p class="varDetails"><b>Variety:</b> <%= variety %></p>
+     			<div class="origin_details" style="display:none">
+                    <ul data-role="listview" data-inset="true">
+                        <li data-role="list-divider">Provenance</li>
+                        <li><b>Country:</b> <%=country %></li>
+                        <li><b>Region:</b> <%=region %></li>
+                        <li><b>Farm:</b> <%=farm %></li>
+                        <li><b>Variety:</b> <%=variety %></li>
+                    </ul>
                 </div>
     
                 <ul data-role="listview" data-inset="true">
