@@ -64,7 +64,7 @@ input.ui-input-text, textarea.ui-input-text
 
 #coffeeList .ui-link-inherit
 {
-	color:black;
+	color:#F5F5F5;
 	text-shadow:none;
 }
 
@@ -111,6 +111,7 @@ a.ui-link-inherit {
 {
 	padding-left:15px;
 	padding-right:15px;
+	padding-bottom: 30px;
 }
 
 .coffeeDetails .ui-body-b
