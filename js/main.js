@@ -6,18 +6,6 @@ var coffee_notes= {
     utils: {},
 };
 
-Backbone.View.prototype.close = function () {
-    if (this.beforeClose) {
-        this.beforeClose();
-    }
-
-    this.remove();
-    this.unbind();
-    
-    console.log('View undelegateEvents');
-    this.undelegateEvents();
-};
-
 // ----------------------------------------------- The Application Router ------------------------------------------ //
 
 coffee_notes.Router = Backbone.Router.extend({
@@ -42,14 +30,20 @@ coffee_notes.Router = Backbone.Router.extend({
         console.log("route: list ");
         var self = this;
         this.getList(function () {
-           console.log("made it through the before callback");
-		   if(self.requestedID)
-		   {
-			   self.coffeeDetails(self.requestedID);
-		   } else {
-           	self.slidePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
-		   }
-        });
+			console.log("made it through the before callback");
+			if(self.requestedID)
+			{
+				var routeOrigin = window.location.hash;
+				var editFound = routeOrigin.search("edit");
+				if(editFound == -1) {
+				  	self.coffeeDetails(self.requestedID);
+				} else {
+					self.editCoffee(self.requestedID);
+				}
+			} else {
+				self.slidePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
+			}
+		});
     },
     
     addCoffee:function () {
@@ -80,14 +74,16 @@ coffee_notes.Router = Backbone.Router.extend({
     editCoffee:function (id) {
         console.log('Router edit details');
         var self = this;
+		self.requestedID = null;
 		
-		if(!self.coffeeList)
-		{
-	   		self.getList(function(){});	
-		}
+		if(!self.coffeeList) self.getList(function(){});	
+		
         var coffee = self.coffeeList.get(id);
-		if(coffee)
+		if(!coffee)
 		{
+			self.requestedID = id;
+			self.list();
+		} else {
         	self.slidePage(new coffee_notes.views.coffeeEditView({model:coffee}));
 		}
     },
@@ -111,28 +107,22 @@ coffee_notes.Router = Backbone.Router.extend({
 				dao.populate(function() {});
 		   }
            callback();
-            }});
+        }});
                                           
     },
 	pageInitHandler: function() {
+		var self = this;
 		console.log("page init handler");
-		var provenance = $("#provenance");
 		
-		if(provenance)
+		if(self.currentPage)
 		{
-			var bean_composition = provenance.html();
-			var originInfo = $(".origin_details");
-			originInfo.hide();
-			if(bean_composition == "Single Origin") 
-			{
-				originInfo.show();
-			}
-			
+			self.currentPage.pageInitHandler();
 		}
 		
 	},
 	
     slidePage:function (page) {
+		this.currentPage = page;
     	//In the jqm-config.js, we took over the routing and transitions of pages from jquery mobile
     	//using backbone instead. so this function plays the role of changing pages.
     	//the page passed has your basic html but does not have the data-role and data-theme attributes
