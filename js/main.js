@@ -1,9 +1,9 @@
 
 // Creating the application namespace
-var coffee_notes= {
+var coffee_notes = {
     models: {},
     views: {},
-    utils: {},
+    utils: {}
 };
 
 Backbone.View.prototype.close = function () {
@@ -22,12 +22,12 @@ Backbone.View.prototype.close = function () {
 
 coffee_notes.Router = Backbone.Router.extend({
 
-    routes:{
-        "":"list",
-        "browse":"list",		
-        "add":"addCoffee",
-        "coffee/:id/edit":"editCoffee",
-        "coffee/:id":"coffeeDetails"
+    routes: {
+        "": "list",
+        "browse": "list",		
+        "add": "addCoffee",
+        "coffee/:id/edit": "editCoffee",
+        "coffee/:id": "coffeeDetails"
 
     },
 
