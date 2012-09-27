@@ -33,6 +33,10 @@ coffee_notes.Router = Backbone.Router.extend({
 			console.log("made it through the before callback");
 			if(self.requestedID)
 			{
+				//if the requestedID is set, that means a reload happened
+				//and was routed to either details or edit.  So we needed
+				//to fetch the list to get the requestedID and then called
+				//either edit or details again.
 				var routeOrigin = window.location.hash;
 				var editFound = routeOrigin.search("edit");
 				if(editFound == -1) {
@@ -64,6 +68,10 @@ coffee_notes.Router = Backbone.Router.extend({
         var coffee = self.coffeeList.get(id);
 		if(!coffee)
 		{
+			//sometimes this happens on reload.  The coffee is really there.  It somehow 
+			//hasn't been populated in the list yet.  Still figuring out why.  So we need 
+			//set the requestID and call List.  List refetch and then call us again passing 
+			//the requestedID.
 			self.requestedID = id;
 			self.list();
 		} else {
@@ -81,6 +89,10 @@ coffee_notes.Router = Backbone.Router.extend({
         var coffee = self.coffeeList.get(id);
 		if(!coffee)
 		{
+			//sometimes this happens on reload.  The coffee is really there.  It somehow 
+			//hasn't been populated in the list yet.  Still figuring out why.  So we need 
+			//set the requestID and call List.  List refetch and then call us again passing 
+			//the requestedID.
 			self.requestedID = id;
 			self.list();
 		} else {
