@@ -6,18 +6,6 @@ var coffee_notes = {
     utils: {}
 };
 
-Backbone.View.prototype.close = function () {
-    if (this.beforeClose) {
-        this.beforeClose();
-    }
-
-    this.remove();
-    this.unbind();
-    
-    console.log('View undelegateEvents');
-    this.undelegateEvents();
-};
-
 // ----------------------------------------------- The Application Router ------------------------------------------ //
 
 coffee_notes.Router = Backbone.Router.extend({
@@ -33,17 +21,33 @@ coffee_notes.Router = Backbone.Router.extend({
 
     initialize:function () {
        var self = this;
-       self.firstPage = true;		
+       self.firstPage = true;
+	   self.getList(function(){});	
 		
     },
 
     list:function () {
         console.log("route: list ");
         var self = this;
-        this.before(function () {
-           console.log("made it through the before callback");
-           self.slidePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
-        });
+        this.getList(function () {
+			console.log("made it through the before callback");
+			if(self.requestedID)
+			{
+				//if the requestedID is set, that means a reload happened
+				//and was routed to either details or edit.  So we needed
+				//to fetch the list to get the requestedID and then called
+				//either edit or details again.
+				var routeOrigin = window.location.hash;
+				var editFound = routeOrigin.search("edit");
+				if(editFound == -1) {
+				  	self.coffeeDetails(self.requestedID);
+				} else {
+					self.editCoffee(self.requestedID);
+				}
+			} else {
+				self.slidePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
+			}
+		});
     },
     
     addCoffee:function () {
@@ -58,20 +62,45 @@ coffee_notes.Router = Backbone.Router.extend({
     coffeeDetails:function (id) {
         console.log('Router details');
         var self = this;
+		self.requestedID = null;
 		
+		if(!self.coffeeList) self.getList(function(){});	
         var coffee = self.coffeeList.get(id);
-        self.slidePage(new coffee_notes.views.coffeeView({model:coffee}));
+		if(!coffee)
+		{
+			//sometimes this happens on reload.  The coffee is really there.  It somehow 
+			//hasn't been populated in the list yet.  Still figuring out why.  So we need 
+			//set the requestID and call List.  List refetch and then call us again passing 
+			//the requestedID.
+			self.requestedID = id;
+			self.list();
+		} else {
+		     self.slidePage(new coffee_notes.views.coffeeView({model:coffee}));
+		}
     },
 	
     editCoffee:function (id) {
         console.log('Router edit details');
         var self = this;
+		self.requestedID = null;
+		
+		if(!self.coffeeList) self.getList(function(){});	
 		
         var coffee = self.coffeeList.get(id);
-        self.slidePage(new coffee_notes.views.coffeeEditView({model:coffee}));
+		if(!coffee)
+		{
+			//sometimes this happens on reload.  The coffee is really there.  It somehow 
+			//hasn't been populated in the list yet.  Still figuring out why.  So we need 
+			//set the requestID and call List.  List refetch and then call us again passing 
+			//the requestedID.
+			self.requestedID = id;
+			self.list();
+		} else {
+        	self.slidePage(new coffee_notes.views.coffeeEditView({model:coffee}));
+		}
     },
 
-    before:function (callback) {
+    getList:function (callback) {
         console.log("getting the stuff list");
         var self = this;
         
@@ -90,10 +119,22 @@ coffee_notes.Router = Backbone.Router.extend({
 				dao.populate(function() {});
 		   }
            callback();
-            }});
+        }});
                                           
     },
+	pageInitHandler: function() {
+		var self = this;
+		console.log("page init handler");
+		
+		if(self.currentPage)
+		{
+			self.currentPage.pageInitHandler();
+		}
+		
+	},
+	
     slidePage:function (page) {
+		this.currentPage = page;
     	//In the jqm-config.js, we took over the routing and transitions of pages from jquery mobile
     	//using backbone instead. so this function plays the role of changing pages.
     	//the page passed has your basic html but does not have the data-role and data-theme attributes
@@ -179,12 +220,28 @@ $(document).ready(function() {
 	//set a callback that starts our backbone router and history	
 	coffee_notes.templateLoader.load(['coffee-list', 'coffee-details', 'coffee-list-item', 'coffee-add', 'coffee-edit'], function () {
     	                        self.app = new coffee_notes.Router();
+								window.router = self.app;
         	                    Backbone.history.start();
             	        });
 
 
 
 });   
+
+function pageInitHandler()
+{
+	if(window.router)
+	{
+		console.log("we have a routing");
+		window.router.pageInitHandler();
+	}
+}
+
+$(document).bind("pageinit", function(event,data) {
+	console.log("page init called");	
+	pageInitHandler();			
+});
+
 
 // ----------------------------------------------- Backbone.sync override ------------------------------------------ //
 // we are overriding the Backbone.sync function to create, read, update and delete our data via our local db.        //

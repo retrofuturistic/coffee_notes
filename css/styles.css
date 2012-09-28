@@ -51,9 +51,9 @@ input.ui-input-text, textarea.ui-input-text
 	background-image: url("images/coffeecup.png");
 	background-position: 10px 20px;
 	background-repeat: no-repeat;
-	//background-color: rgba(156, 178, 186, 0.5);
-	background-color: rgba(120, 120, 120, 0.5);
-	border: 1px solid #B6C7CD);
+	background-color: rgb(156, 178, 186);
+	//background-color: rgba(120, 120, 120, 0.5);
+	border: 1px solid rgb(220,220,220);
 }	
 
 #coffeeList .ui-btn-text
@@ -64,7 +64,7 @@ input.ui-input-text, textarea.ui-input-text
 
 #coffeeList .ui-link-inherit
 {
-	color:black;
+	//color:#F5F5F5;
 	text-shadow:none;
 }
 
@@ -111,14 +111,19 @@ a.ui-link-inherit {
 {
 	padding-left:15px;
 	padding-right:15px;
+	padding-bottom: 30px;
 }
 
 .coffeeDetails .ui-body-b
 {
 	background-image:none;
-	background-color: rgba(255,255,255,0.5);
+	background-color: #F0F0F0;
 	font-weight:normal;
 	text-shadow:none;
 	color:#000;
+}
+
+.ui-body-d {
+	background-color: #F0F0F0;
 }
 
