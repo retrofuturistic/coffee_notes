@@ -44,6 +44,7 @@ coffee_notes.views.coffeeAddView = Backbone.View.extend({
     	"change #provenance" 	: "change_provenance",
         "change"        : "change",
         "click .save"   : "save",
+        "click .roastname"   : "select_roaster",
     },
 
     change: function (event) {
@@ -56,6 +57,48 @@ coffee_notes.views.coffeeAddView = Backbone.View.extend({
         change[target.name] = target.value;
         this.model.set(change);
     },
+	
+    change_roaster: function (event) {
+       	console.log("view change roaster");
+	   	var text = $("#add_roaster").val();
+	   
+	   	var len = coffee_notes.roastersList.length;
+	   	var ListView = $("#roaster_autocomplete");
+	   	ListView.empty();
+		
+		if(text == "")
+			return;
+	
+		for(var i=0;i<len;i++)
+		{
+			var roaster = coffee_notes.roastersList[i];
+			var found = roaster.search(new RegExp(text,"i"));
+    		if(found > -1){
+				
+				ListView.append('<li class="roastname">'+coffee_notes.roastersList[i]+'</li>').listview('refresh');
+			}
+		}
+    },
+	
+	select_roaster:function(event) {
+		console.log("select roaster from autocomplete list");
+		var target = event.target;
+		$('#add_roaster').val(target.innerHTML);
+		
+	   	var ListView = $("#roaster_autocomplete");
+	   	ListView.empty();
+		
+	},
+	
+	pageInitHandler: function()
+	{
+		console.log("page init handler for coffeeAddView");
+		var self = this;
+		 $("#add_roaster").on("input", function(e) {
+			 self.change_roaster(e);
+		 });
+	},
+		
 
     change_provenance: function (event) {
         // Remove any existing alert message

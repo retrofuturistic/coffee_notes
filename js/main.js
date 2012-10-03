@@ -6,6 +6,17 @@ var coffee_notes = {
     utils: {}
 };
 
+coffee_notes.roastersList = new Array("Blue Bottle Coffee",
+	                                "Coava Coffee Roasters",
+                                    "Counter Culture Coffee",
+                                    "De La Paz Coffee Roasters",
+                                    "Four Barrel",
+                                    "Intelligentsia Coffee",
+                                    "Ritual Coffee Roasters",
+                                    "Stumptown Coffee Roasters",                                    
+									"Sightglass Coffee");
+
+
 // ----------------------------------------------- The Application Router ------------------------------------------ //
 
 coffee_notes.Router = Backbone.Router.extend({
@@ -53,7 +64,8 @@ coffee_notes.Router = Backbone.Router.extend({
     addCoffee:function () {
         console.log('Router add');
         var self = this;
-        var coffee = new coffee_notes.models.coffee();
+		var coffee_dao = new coffee_notes.coffeeDAO(coffee_notes.coffeeDB);
+        var coffee = new coffee_notes.models.coffee({dao: coffee_dao});
                                         
         self.slidePage(new coffee_notes.views.coffeeAddView({model:coffee}));
     
@@ -106,16 +118,17 @@ coffee_notes.Router = Backbone.Router.extend({
         
         if (!this.coffeeList) {
             console.log("making a new stuff list");
-            this.coffeeList = new coffee_notes.models.coffeeCollection();
+			var coffee_dao = new coffee_notes.coffeeDAO(coffee_notes.coffeeDB);
+            this.coffeeList = new coffee_notes.models.coffeeCollection({dao:coffee_dao});
         }
         
         //getting the data so its up to date!
-        this.coffeeList.fetch({success:function () {
+        this.coffeeList.fetch({success:function (data) {
 			var numLen = self.coffeeList.models.length;
 		   if(self.coffeeList.models.length == 0)
 		   {
 			   //db is empty, we need to populate for debugging purposes
-				var dao = new coffee_notes.DAO(coffee_notes.db);
+				var dao = new coffee_notes.coffeeDAO(coffee_notes.coffeeDB);
 				dao.populate(function() {});
 		   }
            callback();
@@ -213,8 +226,8 @@ $(document).ready(function() {
 	//it returns a constructor functions that allows you to access, insert, update and delete
 	//record in this table	
 
-	//Setting this to the coffee_notes.db so we can access it later	
-	coffee_notes.db = coffeenotes;
+	//Setting this to the coffee_notes.coffeeDB so we can access it later	
+	coffee_notes.coffeeDB = coffeenotes;
 	
 	//we use the template loader to load our template and
 	//set a callback that starts our backbone router and history	
@@ -228,18 +241,14 @@ $(document).ready(function() {
 
 });   
 
-function pageInitHandler()
-{
+
+$(document).bind("pageinit", function(event,data) {
+	console.log("page init called");	
 	if(window.router)
 	{
 		console.log("we have a routing");
 		window.router.pageInitHandler();
 	}
-}
-
-$(document).bind("pageinit", function(event,data) {
-	console.log("page init called");	
-	pageInitHandler();			
 });
 
 
@@ -250,7 +259,7 @@ Backbone.sync = function (method, model, options) {
 
 	//making out DAO object by passing the stuff notes constructor create in window.startApp
 	//this will give us access to all the major functions needed to CRUD
-    var dao = new coffee_notes.DAO(coffee_notes.db);
+    var dao = new coffee_notes.coffeeDAO(coffee_notes.coffeeDB);
 
     switch (method) {
         case "read":
@@ -262,7 +271,7 @@ Backbone.sync = function (method, model, options) {
 				});
 			} else {
          		console.log("fetching our list of stuff");
-                dao.findAll(function (data) {
+				dao.findAll(function (data) {
                     options.success(data);
                 });
 			}
@@ -282,7 +291,7 @@ Backbone.sync = function (method, model, options) {
             break;
         case "delete":
             console.log("sync delete");
-             dao.delete(model, function () {
+            dao.delete(model, function () {
                 options.success();
             });
            break;

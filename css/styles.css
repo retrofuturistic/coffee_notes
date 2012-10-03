@@ -107,6 +107,25 @@ a.ui-link-inherit {
 	color:#2F3E46;
 }
 
+div .hidden
+{
+	margin-top: -10px;
+	z-index: 5;
+}
+#roaster_autocomplete
+{
+	margin-top:5px;
+}
+#add_roaster
+{
+	z-index:10;
+}
+
+#roaster_autocomplete li
+{
+	border-top-width:0px;
+}
+
 .coffeeDetails
 {
 	padding-left:15px;

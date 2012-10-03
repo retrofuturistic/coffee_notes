@@ -5,11 +5,11 @@
 // Backbone.Models.                                                                                                                     //
 // ------------------------------------------------------------------------------------------------------------------------------------ //
 
-coffee_notes.DAO = function (db) {
+coffee_notes.coffeeDAO = function (db) {
     this.db = db;
 };
 
-_.extend(coffee_notes.DAO.prototype, {
+_.extend(coffee_notes.coffeeDAO.prototype, {
 
 	//Fetches all the record in our table and returns the results to the callback function
     findAll:function (callback) {
@@ -169,3 +169,5 @@ _.extend(coffee_notes.DAO.prototype, {
 		callback();
 		}	
 });
+
+
