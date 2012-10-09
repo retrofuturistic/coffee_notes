@@ -14,7 +14,8 @@ coffee_notes.roastersList = new Array("Blue Bottle Coffee",
                                     "Intelligentsia Coffee",
                                     "Ritual Coffee Roasters",
                                     "Stumptown Coffee Roasters",                                    
-									"Sightglass Coffee");
+									"Sightglass Coffee",
+									"Verve Coffee Roasters");
 
 
 // ----------------------------------------------- The Application Router ------------------------------------------ //
@@ -56,7 +57,9 @@ coffee_notes.Router = Backbone.Router.extend({
 					self.editCoffee(self.requestedID);
 				}
 			} else {
-				self.slidePage(new coffee_notes.views.coffeeListView({model:self.coffeeList}));
+				if(!this.coffeeListPage)
+					this.coffeeListPage = new coffee_notes.views.coffeeListView({model:self.coffeeList});	
+				self.slidePage(this.coffeeListPage);
 			}
 		});
     },
